@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+
+  chillstudy_app:
+    container_name: chillstudy_app
+    image: chillstudy-java:1.0
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - chillstudy_db
+
+
+
+  chillstudy_db:
+    container_name: chillstudy_db
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
