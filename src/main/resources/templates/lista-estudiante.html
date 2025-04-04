@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ver Estudiantes - ChillStudy</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f6f8;
+    }
+
+    .sidebar {
+      width: 230px;
+      background-color: #ffffff;
+      border-right: 1px solid #ddd;
+      padding: 25px 20px;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar h2 {
+      margin-bottom: 35px;
+      font-size: 24px;
+      text-align: center;
+      color: #3b7dd8;
+      letter-spacing: 1px;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #e6ecf3;
+    }
+
+    .sidebar a.active {
+      background-color: #d0e3ff;
+      font-weight: bold;
+      color: #1d4dbf;
+    }
+
+    .main {
+      flex: 1;
+      padding: 40px;
+      animation: fadeInRight 0.8s ease;
+    }
+
+    @keyframes fadeInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    thead {
+      background-color: #d0e3ff;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    tr {
+      border-bottom: 1px solid #eee;
+    }
+
+    button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #3b7dd8;
+      color: white;
+      margin-right: 5px;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>ChillStudy</h2>
+    <a href="inicio.html"><span>🏠</span> Inicio</a>
+    <a href="registro-estudiantes.html"><span>🧑‍🎓</span> Registrar Estudiante</a>
+    <a href="consulta-estudiantes.html" class="active"><span>📋</span> Ver Estudiantes</a>
+    <a href="registro-historial.html"><span>📚</span> Registrar Historial</a>
+    <a href="consulta-historial.html"><span>📑</span> Ver Historial</a>
+    <a href="recomendaciones.html"><span>💡</span> Recomendaciones</a>
+  </div>
+
+  <div class="main">
+    <h2>Estudiantes Registrados</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Carnet</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Carrera</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <table>
+            <tr th:each="est : ${estudiante}">
+
+                <td th:text="${est.carnet}"></td>
+                <td th:text="${est.nombre}"></td>
+                <td th:text="${est.correo}"></td>
+
+                <td>
+                  <!-- Manejo seguro de intereses (incluso si es null) -->
+                  <span th:if="${est.intereses == null}">Sin intereses</span>
+                  <span th:if="${est.intereses != null}" 
+                        th:each="interes, iterStat : ${est.intereses}" 
+                        th:text="${interes + (iterStat.last ? '' : ', ')}"></span>
+                </td>
+                <td>
+                    <form th:action="@{'/editar/' + ${est.id}}" method="get" style="display: inline;">
+                        <button type="submit" class="btn btn-info">✏️ Editar</button>
+                    </form>
+                    <form th:action="@{'/eliminar/' + ${est.id}}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger" 
+                                onclick="return confirm('¿Seguro deseas eliminar este registro?')">🗑️ Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

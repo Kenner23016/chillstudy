@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ver Historial - ChillStudy</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f6f8;
+    }
+
+    .sidebar {
+      width: 230px;
+      background-color: #ffffff;
+      border-right: 1px solid #ddd;
+      padding: 25px 20px;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar h2 {
+      margin-bottom: 35px;
+      font-size: 24px;
+      text-align: center;
+      color: #3b7dd8;
+      letter-spacing: 1px;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #e6ecf3;
+    }
+
+    .sidebar a.active {
+      background-color: #d0e3ff;
+      font-weight: bold;
+      color: #1d4dbf;
+    }
+
+    .main {
+      flex: 1;
+      padding: 40px;
+      animation: fadeInRight 0.8s ease;
+    }
+
+    @keyframes fadeInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    thead {
+      background-color: #d0e3ff;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    tr {
+      border-bottom: 1px solid #eee;
+    }
+
+    button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #3b7dd8;
+      color: white;
+      margin-right: 5px;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>ChillStudy</h2>
+        <a href="/"><span>🏠</span> Inicio</a>
+        <a href="#"><span>🧑‍🎓</span> Registrar Estudiante</a>
+        <a href="#"><span>📋</span> Ver Estudiantes</a>
+        <a href="/registro-academico" class="active"><span>📚</span> Registrar Historial</a>
+        <a href="#"><span>📑</span> Ver Historial</a>
+        <a href="#"><span>💡</span> Recomendaciones</a>
+      </div>
+    
+      <div class="main">
+        <h2>Lista de Registros Académicos</h2>
+        <a th:href="@{/crear}" class="add-btn">+ Nuevo Registro</a>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Estudiante</th>
+              <th>Curso</th>
+              <th>Calificación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="registro : ${estudiante}">
+              <td th:text="${registro.nombre_estudiante}"></td>
+              <td th:text="${registro.nombre_curso}"></td>
+              <td th:text="${registro.calificacion}"></td>
+              <td class="actions">
+                <a th:href="@{/modificar/{id}(id=${registro.id})}">Editar</a>
+                <a th:href="@{/borrar/{id}(id=${registro.id})}" 
+                   onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+    </body>
+    </html>
+    

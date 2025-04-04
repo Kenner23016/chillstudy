@@ -1,1 +1,5 @@
 com/libcode/ChillStudy/ChillStudy/ChillStudyApplication.class
+com/libcode/ChillStudy/ChillStudy/RegistroAcademico/entities/RegistroAcademico.class
+com/libcode/ChillStudy/ChillStudy/RegistroAcademico/controllers/TestsControler.class
+com/libcode/ChillStudy/ChillStudy/RegistroAcademico/controllers/RegistroAcademicoController.class
+com/libcode/ChillStudy/ChillStudy/RegistroAcademico/repository/RegistroAcademicoRepository.class

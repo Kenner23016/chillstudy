@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Historial - ChillStudy</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f6f8;
+    }
+
+    .sidebar {
+      width: 230px;
+      background-color: #ffffff;
+      border-right: 1px solid #ddd;
+      padding: 25px 20px;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar h2 {
+      margin-bottom: 35px;
+      font-size: 24px;
+      text-align: center;
+      color: #3b7dd8;
+      letter-spacing: 1px;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #e6ecf3;
+    }
+
+    .sidebar a.active {
+      background-color: #d0e3ff;
+      font-weight: bold;
+      color: #1d4dbf;
+    }
+
+    .main {
+      flex: 1;
+      padding: 40px;
+      animation: fadeInRight 0.8s ease;
+    }
+
+    @keyframes fadeInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    form label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fff;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: #3b7dd8;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 20px;
+      background-color: #3b7dd8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #326ec0;
+    }
+  </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>ChillStudy</h2>
+        <a href="/"><span>🏠</span> Inicio</a>
+        <a href="/estudiante"><span>🧑‍🎓</span> Registrar Estudiante</a>
+        <a href="#"><span>📋</span> Ver Estudiantes</a>
+        <a href="/lista-registro-academico" class="active"><span>📚</span> Registrar Historial</a>
+        <a href="#"><span>📑</span> Ver Historial</a>
+        <a href="#"><span>💡</span> Recomendaciones</a>
+      </div>
+    
+      <div class="main">
+        <h2 th:text="${usuario.id} ? 'Editar Registro Académico' : 'Registrar Historial Académico'"></h2>
+        <form method="post" th:object="${usuario}" th:action="@{/crear}">
+          <input type="hidden" th:field="*{id}">
+          
+          <label for="nombre_estudiante">Estudiante:</label>
+          <input type="text" id="nombre_estudiante" th:field="*{nombre_estudiante}" 
+                 placeholder="Nombre del estudiante">
+          
+          <label for="nombre_curso">Curso:</label>
+          <input type="text" id="nombre_curso" th:field="*{nombre_curso}" 
+                 placeholder="Nombre del curso">
+          
+          <label for="calificacion">Calificación:</label>
+          <input type="number" id="calificacion" th:field="*{calificacion}" 
+                 min="0" max="10" step="0.1" placeholder="Ej: 8.5">
+          
+          <label for="observaciones">Observaciones:</label>
+          <textarea id="observaciones" th:field="*{observaciones}" 
+                    rows="4" placeholder="Comentarios sobre el rendimiento..."></textarea>
+          
+          <button type="submit">Guardar Registro</button>
+        </form>
+      </div>
+    
+    </body>
+</html>
